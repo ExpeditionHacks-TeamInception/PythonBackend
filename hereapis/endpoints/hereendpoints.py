@@ -4,21 +4,16 @@ import json
 
 from hereapis import hereService
 
-ns = Namespace('hereapis', description='Operations related to here api')
-app = Flask(__name__)
-
-
 app = Flask(__name__)
 ns = Namespace('Here maps Service', description='Here maps Service API Version 1.0')
 
 
 address_model = ns.model('address', {
-    "street": fields.String(required=True),
-    "city": fields.String(required=True),
-    "zipcode":fields.List(fields.String,required=True)
+    "HouseNumber": fields.Integer(required=True),
+    "Street": fields.String(required=True),
+    "city": fields.String(required=True)
 
 })
-
 
 @ns.route('/v1/latlang')
 class LatLong(Resource):
@@ -28,6 +23,18 @@ class LatLong(Resource):
             get lat long based on address
         """
         data = json.dumps(request.get_json())
-        street = json.loads(data)['street']
-        response = hereService.getLatLang(data)
-        return json.loads(response)
+        houseNumber = json.loads(data)['HouseNumber']
+        street = json.loads(data)['Street']
+        city = json.loads(data)['city']
+        #address = '&housenumber='+houseNumber+'&street='+street+'&city='+city
+        response = hereService.getLatLang(houseNumber, street, city)
+        return response
+    
+@ns.route('/v1/latlang/<address>')
+class LatLongs(Resource):
+    def get(self, address):
+        """
+            get lat long based on address string
+        """
+        response = hereService.getLatLangs(address)
+        return response
