@@ -21,6 +21,16 @@ class LatLong(Resource):
     def post(self):
         """
             get lat long based on address
+            
+            Example:
+            ```
+            {
+              "city": "Austin",
+              "Street": "Tapadera Trace Ln",
+              "HouseNumber": 5700
+            }
+            ```
+            
         """
         data = json.dumps(request.get_json())
         houseNumber = json.loads(data)['HouseNumber']
@@ -35,6 +45,21 @@ class LatLongs(Resource):
     def get(self, address):
         """
             get lat long based on address string
+            
+            Example: 
+            ```  5700 Tapadera Trace Ln, Austin, TX  ```
         """
-        response = hereService.getLatLangs(address)
+        response = hereService.getLatLongs(address)
+        return response
+    
+@ns.route('/v1/latlang/<prox>')
+class CityAddress(Resource):
+    def get(self, prox):
+        """
+            get city based on Lat Long
+            
+            Example: 
+            ```  50.112,8.683,100 ```
+        """
+        response = hereService.getCityByLatLong(prox)
         return response

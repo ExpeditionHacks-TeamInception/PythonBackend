@@ -1,9 +1,12 @@
 import requests
 import json
 
-url = "https://geocoder.cit.api.here.com/6.2/geocode.json?"
+address_url = "https://geocoder.cit.api.here.com/6.2/geocode.json?"
+route_url = "https://route.cit.api.here.com/routing/7.2/calculateroute.json?"
+reversecode_url = "https://reverse.geocoder.cit.api.here.com/6.2/reversegeocode.json?"
 app_id = "8zbmKsTdRGcXP9qI8pI5"
 app_code = "wgchKRAQBczyCzYKVW1YdQ"
+
 def getLatLang(houseNumber, street, city):
     payload = {'housenumber': houseNumber, 
                'street': street,
@@ -11,11 +14,11 @@ def getLatLang(houseNumber, street, city):
                'app_id': app_id, 
                'app_code': app_code, 
                'gen': '8'}
-    response = requests.get(url, params=payload)
-    print response.url
+    response = requests.get(address_url, params=payload)
+    #print response.url
     return json.loads(response.text)
 
-def getLatLangs(address):
+def getLatLongs(address):
     
     #mydict = { 'searchtext' : address, 'app_id' : "8zbmKsTdRGcXP9qI8pI5", 'app_code' : "wgchKRAQBczyCzYKVW1YdQ", 'gen' : "8"}
     #encryptedUrl = urllib.urlencode(mydict, 'utf-8')
@@ -33,6 +36,11 @@ def getLatLangs(address):
     
     payload = {'searchtext': address, 'app_id': app_id, 'app_code': app_code, 'gen': '8'}
     
-    r = requests.get(url, params=payload)
+    r = requests.get(address_url, params=payload)
     #print r.url
+    return json.loads(r.text)
+
+def getCityByLatLong(prox):
+    payload = {'prox': prox, 'app_id': app_id, 'app_code': app_code, 'gen': '9', 'mode': 'retrieveAddresses'}
+    r = requests.get(reversecode_url, params=payload)
     return json.loads(r.text)
