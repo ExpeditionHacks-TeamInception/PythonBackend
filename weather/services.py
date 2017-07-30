@@ -56,7 +56,9 @@ def checkAlert(forecast, future_time_ms):
         #alertStr += 'Fog Conditions. Low Visibility Alert!\n'
     if float(wind_mph) > 30.0:
         alertStr += 'Extreme Winds. Drive Carefully!\n'
-    if float(temp_c) >= 38.0:
+    if (float(temp_c) > 32.0) and (float(temp_c) < 40.0):
+        alertStr += 'High Heat Conditions.\n'
+    if float(temp_c) >= 40.0:
         alertStr += 'Extreme Heat Conditions.\n'
 
     return alertStr
