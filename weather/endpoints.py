@@ -13,7 +13,7 @@ ns = Namespace('APIXU Weather Service', description='APIXU Weather Service')
 lat_lon_time_model = ns.model('lat_lon', {
     "lat": fields.String(required=True),
     "lon": fields.String(required=True),
-    "time": fields.String(required=False)
+    "time": fields.String(required=True)
 
 })
 
@@ -38,7 +38,7 @@ class getWeatherByLatLong(Resource):
             get weather based on latitude and longitude
 
             Example:
-            ```   lat= 30.2672, lon= -97.7431 ```
+            ```   lat= 30.2672, lon= -97.7431, time=0 (seconds from now) ```
         """
         data = json.dumps(request.get_json())
         lat = json.loads(data)['lat']
@@ -55,7 +55,7 @@ class GetAlertByLatLong(Resource):
             get weather based on latitude and longitude
 
             Example:
-            ```   lat= 30.2672, lon= -97.7431 ```
+            ```   lat: 30.2672, lon= -97.7431, time= 0.0```
         """
         data = json.dumps(request.get_json())
         lat = json.loads(data)['lat']
