@@ -42,7 +42,9 @@ def getLatLongs(address):
     
     r = requests.get(address_url, params=payload)
     #print r.url
-    return json.loads(r.text)
+    latLongData = parseJsonData(json.loads(r.text))
+    return latLongData
+    #return json.loads(r.text)
 
 def getCityByLatLong(prox):
     payload = {'prox': prox, 'app_id': app_id, 'app_code': app_code, 'gen': '9', 'mode': 'retrieveAddresses'}
