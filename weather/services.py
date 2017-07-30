@@ -43,9 +43,10 @@ def getAllAlertsOnRoute(data):
         location = json.dumps(loc)
         lat = float(json.loads(location)['latitude'])
         lon = float(json.loads(location)['longitude'])
-        time = "0.0"
+        time = float(json.loads(location)['travelTime'])
         print("{\nlat: ",lat)
         print("\nlon: ",lon)
+        print("\ntime:", time)
         print("\n}")
         if(getAlertByLatLong(lat,lon,time) is True):
             retArray.append({'latitude': lat, 'longitude': lon, 'alert': 'Raining here. Roads might be wet. Drive Carefully.'})
