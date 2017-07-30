@@ -5,6 +5,7 @@ address_url = "https://geocoder.cit.api.here.com/6.2/geocode.json?"
 route_url = "https://route.cit.api.here.com/routing/7.2/calculateroute.json?"
 reversecode_url = "https://reverse.geocoder.cit.api.here.com/6.2/reversegeocode.json?"
 weather_url = "http://api.openweathermap.org/data/2.5/weather?"
+weather_forcast = "http://api.openweathermap.org/data/2.5/forecast?"
 
 app_id = "8zbmKsTdRGcXP9qI8pI5"
 app_code = "wgchKRAQBczyCzYKVW1YdQ"
@@ -50,5 +51,17 @@ def getCityByLatLong(prox):
 def getWeatherByZipcode(zipcode):
     payload = {'zip': zipcode, 'APPID': "5b2b1fdcd2fc36317168cb007e59f754"}
     r = requests.get(weather_url, payload)
+    print r.url
+    return json.loads(r.text)
+
+def getWeatherByCity(cityid):
+    payload = {'id': cityid, 'APPID': "5b2b1fdcd2fc36317168cb007e59f754"}
+    r = requests.get(weather_forcast, payload)
+    print r.url
+    return json.loads(r.text)
+
+def getWeatherByLatLong(lat, lon):
+    payload = {'lat': lat,'lon': lon, 'APPID': "5b2b1fdcd2fc36317168cb007e59f754"}
+    r = requests.get(weather_forcast, payload)
     print r.url
     return json.loads(r.text)

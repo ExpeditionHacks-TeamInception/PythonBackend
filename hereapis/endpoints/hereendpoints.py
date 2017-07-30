@@ -14,6 +14,11 @@ address_model = ns.model('address', {
     "city": fields.String(required=True)
 
 })
+lat_lon_model = ns.model('lat_lon', {
+    "lat": fields.String(required=True),
+    "lon": fields.String(required=True),
+
+})
 
 @ns.route('/v1/latlang')
 class LatLong(Resource):
@@ -68,10 +73,27 @@ class CityAddress(Resource):
 class getWeatherByZip(Resource):
     def get(self, zipcode):
         """
-            get weather based on city
+            get weather based on zipcode and country code
             
             Example: 
             ```  78727,us ```
         """
         response = hereService.getWeatherByZipcode(zipcode)
+        return response
+
+
+@ns.route('/v1/weather')
+class getWeatherByLatLong(Resource):
+    @ns.expect(lat_lon_model, validate = True)
+    def post(self):
+        """
+            get weather based on lat lon
+            
+            Example: 
+            ```   lat= 35, lon= 139 ```
+        """
+        data = json.dumps(request.get_json())
+        lat = json.loads(data)['lat']
+        lon = json.loads(data)['lon']
+        response = hereService.getWeatherByLatLong(lat, lon)
         return response
