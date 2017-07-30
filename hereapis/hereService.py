@@ -1,5 +1,6 @@
 import requests
 import json
+from hereapis.calc import getDistance
 
 address_url = "https://geocoder.cit.api.here.com/6.2/geocode.json?"
 route_url = "https://route.cit.api.here.com/routing/7.2/calculateroute.json?"
@@ -88,9 +89,46 @@ def getWayPonintsbtwLocations(start, dest):
     
 def getWayPointsList(data):
     pointsArray = []
-    wayPointsData = data['response']['route'][0]['leg'][0]['maneuver']
+    if len(data) > 0:
+        wayPointsData = data['response']['route'][0]['leg'][0]['maneuver']
     
-    for arrayItem in wayPointsData:
-        pointsArray.append({"latlong" : arrayItem['position'], "travelTime" : arrayItem['travelTime']*1000})
-    return pointsArray
+    if len(wayPointsData) > 0:
+        for arrayItem in wayPointsData:
+            pointsArray.append({"latlong" : arrayItem['position'], "travelTime" : arrayItem['travelTime']*1000})
+        
+   
+        index = 0
+        totalDistance = 0
+        newWaypoints = []
+        if len(pointsArray) > 0 :
+            lat1 = pointsArray[0]['latlong']['latitude']
+            long1 = pointsArray[0]['latlong']['longitude']
+            newWaypoints.append({"latitude": lat1, "longitude": long1})
+            index += 1
+            templat = pointsArray[0]['latlong']['latitude']
+            templong = pointsArray[0]['latlong']['longitude']                   
+            while index < len(pointsArray)-1:
+                #print(index, items[index])
+                #lat1 = pointsArray[index]['latlong']['latitude']
+                #long1 = pointsArray[index]['latlong']['longitude']
+                lat2 = pointsArray[index+1]['latlong']['latitude']
+                long2 = pointsArray[index+1]['latlong']['longitude']
+                distance = getDistance(templat, templong, lat2, long2)
+                print("diastance:", distance)
+                totalDistance += distance
+                if(distance > 50):
+                    newWaypoints.append({"latitude": lat2, "longitude": long2})
+                    templat = lat2
+                    templong = long2
+                    
+                index += 1
+            latLast = pointsArray[len(pointsArray)-1]['latlong']['latitude']
+            longLast = pointsArray[len(pointsArray)-1]['latlong']['longitude']
+            newWaypoints.append({"latitude": latLast, "longitude": longLast})
+        print("new points array length:", len(newWaypoints))
+        print("new points:", newWaypoints)
+        print("total distance:", totalDistance)
+        
+    print("old points array length:", len(pointsArray))
+    return newWaypoints
 
