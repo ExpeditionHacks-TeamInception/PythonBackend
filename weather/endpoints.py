@@ -80,7 +80,7 @@ class GetAllAlertsOnRoute(Resource):
         data = json.dumps(request.get_json())
         # start = json.loads(data)['waypoint0']
         # dest = json.loads(data)['waypoint1']
-        resp1 = hereService.getWayPonintsbtwLocations(maneuver=data)
+        resp1 = hereService.getWayPonintsbtwLocations(route=data)
 
         response = services.getAllAlertsOnRoute(resp1)
         return response
