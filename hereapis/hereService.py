@@ -103,7 +103,7 @@ def getWayPointsList(data):
         if len(pointsArray) > 0 :
             lat1 = pointsArray[0]['latlong']['latitude']
             long1 = pointsArray[0]['latlong']['longitude']
-            newWaypoints.append({"latitude": lat1, "longitude": long1})
+            newWaypoints.append({"latitude": lat1, "longitude": long1, "travelTime": pointsArray[0]['travelTime']})
             index += 1
             templat = pointsArray[0]['latlong']['latitude']
             templong = pointsArray[0]['latlong']['longitude']                   
@@ -117,14 +117,14 @@ def getWayPointsList(data):
                 print("diastance:", distance)
                 totalDistance += distance
                 if(distance > 50):
-                    newWaypoints.append({"latitude": lat2, "longitude": long2})
+                    newWaypoints.append({"latitude": lat2, "longitude": long2, "travelTime": pointsArray[index+1]['travelTime']})
                     templat = lat2
                     templong = long2
                     
                 index += 1
             latLast = pointsArray[len(pointsArray)-1]['latlong']['latitude']
             longLast = pointsArray[len(pointsArray)-1]['latlong']['longitude']
-            newWaypoints.append({"latitude": latLast, "longitude": longLast})
+            newWaypoints.append({"latitude": latLast, "longitude": longLast, "travelTime": pointsArray[len(pointsArray)-1]['travelTime']})
         print("new points array length:", len(newWaypoints))
         print("new points:", newWaypoints)
         print("total distance:", totalDistance)
