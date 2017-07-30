@@ -1,6 +1,8 @@
 from flask import Flask, request
 from flask_restplus import Resource, fields, Namespace
 import json
+import requests
+from hereapis import hereService
 
 from weather import services
 
@@ -12,6 +14,18 @@ lat_lon_time_model = ns.model('lat_lon', {
     "lat": fields.String(required=True),
     "lon": fields.String(required=True),
     "time": fields.String(required=False)
+
+})
+
+lat_lon_model = ns.model('lat_lon', {
+    "lat": fields.String(required=True),
+    "lon": fields.String(required=True)
+})
+
+
+way_points_model = ns.model('way_points_model', {
+    "waypoint0": fields.String(required=True),
+    "waypoint1": fields.String(required=True),
 
 })
 
@@ -48,4 +62,26 @@ class GetAlertByLatLong(Resource):
         lon = json.loads(data)['lon']
         time = json.loads(data)['time']
         response = services.getAlertByLatLong(lat, lon, time)
+        return response
+
+@ns.route('/getAllAlertsOnRoute')
+class GetAllAlertsOnRoute(Resource):
+    @ns.expect(way_points_model, validate=True)
+    def post(self):
+        """
+        Get All Lat-Longs on the route for which there is a weather alert
+            Example:
+            ```
+            {
+                "waypoint0": "52.5160,13.3779",
+                "waypoint1": "52.5206,13.3862"
+            }
+            ```
+        """
+        data = json.dumps(request.get_json())
+        start = json.loads(data)['waypoint0']
+        dest = json.loads(data)['waypoint1']
+        resp1 = hereService.getWayPonintsbtwLocations(start, dest)
+
+        response = services.getAllAlertsOnRoute(resp1)
         return response

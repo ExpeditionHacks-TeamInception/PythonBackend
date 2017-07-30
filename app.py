@@ -1,12 +1,14 @@
 from flask import Flask
 from flask_restplus import Api
 from hereapis.endpoints.hereendpoints import ns as ns_hereapi
+
 from weather.endpoints import ns as ns_apixu
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app,supports_credentials=True)
+# cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 api = Api(app, version='1.0', title='Here maps API',
     description='Here Service API'
 )
