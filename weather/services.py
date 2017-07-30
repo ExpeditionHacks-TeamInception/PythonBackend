@@ -49,10 +49,10 @@ def checkAlert(forecast, future_time_ms):
         alertStr += 'Low Visibility. Drive Carefully!\n'
     if (float(temp_c) < 2.0 and float(precip_mm) > 0.0):
         alertStr += 'Road Icing Alert. Use Extreme Caution!\n'
-    if float(temp_c) < 0.0:
+    if float(temp_c) <= 0.0:
         alertStr += 'Freezing Conditions!\n'
-    if ((float(temp_c)-float(dewpoint_c)) < 1.0 or (float(dewpoint_c)-float(temp_c)) < 1.0):
-        alertStr += 'Fog Conditions. Low Visibility Alert!\n'
+    # if ((float(temp_c)-float(dewpoint_c)) < 1.0 or (float(dewpoint_c)-float(temp_c)) < 1.0):
+        #alertStr += 'Fog Conditions. Low Visibility Alert!\n'
     if float(wind_mph) > 30.0:
         alertStr += 'Extreme Winds. Drive Carefully!\n'
 
