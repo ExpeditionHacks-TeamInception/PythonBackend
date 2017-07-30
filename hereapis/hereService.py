@@ -94,7 +94,7 @@ def getWayPointsList(data):
     
     if len(wayPointsData) > 0:
         for arrayItem in wayPointsData:
-            pointsArray.append({"latlong" : arrayItem['position'], "travelTime" : arrayItem['travelTime']*1000})
+            pointsArray.append({"latlong" : arrayItem['position'], "travelTime" : arrayItem['travelTime']})
         
    
         index = 0
