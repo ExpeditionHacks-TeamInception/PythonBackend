@@ -91,7 +91,7 @@ def getWayPointsList(data):
     pointsArray = []
     if len(data) > 0:
         #wayPointsData = data['response']['route'][0]['leg'][0]['maneuver']
-        wayPointsData = data[0]['leg'][0]['maneuver']
+        wayPointsData = data['leg'][0]['maneuver']
     
     if len(wayPointsData) > 0:
         for arrayItem in wayPointsData:
