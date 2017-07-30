@@ -79,18 +79,19 @@ def parseJsonData(data):
     print parsedData
     return parsedData
 
-def getWayPonintsbtwLocations(start, dest):
-    payload = {'waypoint0': start,'waypoint1': dest, 'mode':"fastest;car;traffic:enabled", 'departure':"now",'app_id': app_id, 'app_code': app_code}
-    r = requests.get(way_points, payload)
-    print r.url
-    wayPointsData = getWayPointsList(json.loads(r.text))
+def getWayPonintsbtwLocations(maneuver):
+    #payload = {'waypoint0': start,'waypoint1': dest, 'mode':"fastest;car;traffic:enabled", 'departure':"now",'app_id': app_id, 'app_code': app_code}
+    #r = requests.get(way_points, payload)
+    #print r.url
+    wayPointsData = getWayPointsList(json.loads(maneuver.text))
     #return json.loads(r.text)
     return wayPointsData
     
 def getWayPointsList(data):
     pointsArray = []
     if len(data) > 0:
-        wayPointsData = data['response']['route'][0]['leg'][0]['maneuver']
+        #wayPointsData = data['response']['route'][0]['leg'][0]['maneuver']
+        wayPointsData = data
     
     if len(wayPointsData) > 0:
         for arrayItem in wayPointsData:
