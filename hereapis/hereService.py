@@ -19,7 +19,8 @@ def getLatLang(houseNumber, street, city):
                'gen': '8'}
     response = requests.get(address_url, params=payload)
     #print response.url
-    return json.loads(response.text)
+    latLongData = parseJsonData(json.loads(response.text))
+    return latLongData
 
 def getLatLongs(address):
     
@@ -65,3 +66,8 @@ def getWeatherByLatLong(lat, lon):
     r = requests.get(weather_forecast, payload)
     print r.url
     return json.loads(r.text)
+
+def parseJsonData(data):
+    parsedData = data['Response']['View'][0]['Result'][0]['Location']['NavigationPosition'][0]
+    print parsedData
+    return parsedData
