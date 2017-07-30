@@ -81,7 +81,6 @@ class getWeatherByZip(Resource):
         response = hereService.getWeatherByZipcode(zipcode)
         return response
 
-
 @ns.route('/v1/weather')
 class getWeatherByLatLong(Resource):
     @ns.expect(lat_lon_model, validate = True)
@@ -96,4 +95,16 @@ class getWeatherByLatLong(Resource):
         lat = json.loads(data)['lat']
         lon = json.loads(data)['lon']
         response = hereService.getWeatherByLatLong(lat, lon)
+        return response
+
+@ns.route('/v1/weather/forecast/<cityname>')
+class getWeatherByCityName(Resource):
+    def get(self, cityname):
+        """
+            get weather based cityname
+            
+            Example: 
+            ```  Austin,us ```
+        """
+        response = hereService.getWeatherByCity(cityname)
         return response
