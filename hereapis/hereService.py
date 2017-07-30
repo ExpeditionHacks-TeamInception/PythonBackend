@@ -91,5 +91,6 @@ def getWayPointsList(data):
     wayPointsData = data['response']['route'][0]['leg'][0]['maneuver']
     
     for arrayItem in wayPointsData:
-        pointsArray.append(arrayItem['position'])
+        pointsArray.append({"latlong" : arrayItem['position'], "travelTime" : arrayItem['travelTime']*1000})
     return pointsArray
+
