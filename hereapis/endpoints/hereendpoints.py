@@ -20,6 +20,12 @@ lat_lon_model = ns.model('lat_lon', {
 
 })
 
+way_points_model = ns.model('way_points_model', {
+    "waypoint0": fields.String(required=True),
+    "waypoint1": fields.String(required=True),
+
+})
+
 @ns.route('/v1/latlang')
 class LatLong(Resource):
     @ns.expect(address_model, validate = True)
@@ -107,4 +113,24 @@ class getWeatherByCityName(Resource):
             ```  Austin,us ```
         """
         response = hereService.getWeatherByCity(cityname)
+        return response
+    
+    
+@ns.route('/v1/weather/waypoints')
+class getWayPonintsbtwLocations(Resource):
+    @ns.expect(way_points_model, validate = True)
+    def post(self):
+        """ 
+            Example: 
+            ```  
+            {   
+                "waypoint0": "52.5160,13.3779", 
+                "waypoint1": "52.5206,13.3862" 
+            }
+            ```
+        """
+        data = json.dumps(request.get_json())
+        start = json.loads(data)['waypoint0']
+        dest = json.loads(data)['waypoint1']
+        response = hereService.getWayPonintsbtwLocations(start, dest)
         return response
