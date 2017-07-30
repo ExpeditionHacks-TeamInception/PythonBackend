@@ -83,7 +83,7 @@ def getWayPonintsbtwLocations(route):
     #payload = {'waypoint0': start,'waypoint1': dest, 'mode':"fastest;car;traffic:enabled", 'departure':"now",'app_id': app_id, 'app_code': app_code}
     #r = requests.get(way_points, payload)
     #print r.url
-    wayPointsData = getWayPointsList(json.loads(route.text))
+    wayPointsData = getWayPointsList(json.loads(route))
     #return json.loads(r.text)
     return wayPointsData
     
