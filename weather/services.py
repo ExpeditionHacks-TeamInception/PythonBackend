@@ -35,6 +35,7 @@ def checkAlert(forecast, future_time_ms):
     temp_c = forecast['hour'][datetime.fromtimestamp(future_time_ms).hour]['temp_c']
     dewpoint_c = forecast['hour'][datetime.fromtimestamp(future_time_ms).hour]['dewpoint_c']
     wind_mph = forecast['hour'][datetime.fromtimestamp(future_time_ms).hour]['wind_mph']
+
     # logger.info(">>>>precipitation in inches is: %s", str(precip_in))
     # return precip_in
     if (float(precip_mm) > 0.0 and float(precip_mm) <= 0.5):
@@ -50,11 +51,13 @@ def checkAlert(forecast, future_time_ms):
     if (float(temp_c) < 2.0 and float(precip_mm) > 0.0):
         alertStr += 'Road Icing Alert. Use Extreme Caution!\n'
     if float(temp_c) <= 0.0:
-        alertStr += 'Freezing Conditions!\n'
+        alertStr += 'Freezing Conditions.\n'
     # if ((float(temp_c)-float(dewpoint_c)) < 1.0 or (float(dewpoint_c)-float(temp_c)) < 1.0):
         #alertStr += 'Fog Conditions. Low Visibility Alert!\n'
     if float(wind_mph) > 30.0:
         alertStr += 'Extreme Winds. Drive Carefully!\n'
+    if float(temp_c) >= 100.0:
+        alertStr += 'Extreme Heat Conditions.\n'
 
     return alertStr
 
