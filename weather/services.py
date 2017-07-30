@@ -30,7 +30,7 @@ def getAlertByLatLong(lat, lon, time):
 
 def checkAlert(forecast, future_time_ms):
     precip_in = forecast['hour'][datetime.fromtimestamp(future_time_ms/1000).hour]['precip_in']
-    logger.info(">>>>precipitation in inches is: %s", str(precip_in))
+    # logger.info(">>>>precipitation in inches is: %s", str(precip_in))
     return precip_in
     # if float(precip_in) > 0.0:
     #     return True
