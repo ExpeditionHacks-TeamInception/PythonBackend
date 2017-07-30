@@ -63,3 +63,15 @@ class CityAddress(Resource):
         """
         response = hereService.getCityByLatLong(prox)
         return response
+    
+@ns.route('/v1/weather/<zipcode>')
+class getWeatherByZip(Resource):
+    def get(self, zipcode):
+        """
+            get weather based on city
+            
+            Example: 
+            ```  78727,us ```
+        """
+        response = hereService.getWeatherByZipcode(zipcode)
+        return response
